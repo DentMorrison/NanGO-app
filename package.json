@@ -1,0 +1,29 @@
+{
+  "name": "nango",
+  "private": true,
+  "type": "module",
+  "description": "ÑanGO: guía de transporte público de Juliaca",
+  "scripts": {
+    "admin": "node tools/admin.mjs",
+    "vendor": "node tools/vendor.mjs",
+    "validar": "node tools/lineas.mjs validar",
+    "test": "node tests/routing.test.mjs && node tests/admin-api.test.mjs && node tests/geo.test.mjs && node --experimental-strip-types --no-warnings tests/expandir-enlace.test.mjs && node tests/vendor.test.mjs && node tests/avisos-vigencia.test.mjs && node tests/cuentas.test.mjs && node tests/soporte.test.mjs && node tests/i18n.test.mjs && node tests/perfil.test.mjs && node tests/avisos-limite.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  }
+}

@@ -1,0 +1,51 @@
+/* ================================================================
+   09 · PERFIL y pantallas internas (favoritos, historial, sin internet, idioma, texto, ayuda)
+   ================================================================ */
+.profile-hero { background: var(--hero); color: #fff; padding-bottom: 22px; flex-shrink: 0; }
+.profile-hero__who { display: flex; align-items: center; gap: 14px; padding: 6px 16px 0; }
+.profile-hero__avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--amarillo); color: #0F2D57; font: italic 700 2.25rem var(--font-display); display: grid; place-items: center; flex-shrink: 0; }
+.profile-hero__avatar i { font-size: 32px; }
+.profile-hero b { font-size: 1.1875rem; display: block; }
+.profile-hero span { font-size: .875rem; opacity: .85; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 14px; }
+.stats > div { background: var(--card); border-radius: 18px; padding: 12px 10px; text-align: center; }
+.stats b { font: 700 2.125rem/1 var(--font-display); display: block; }
+.stats span { font-size: .75rem; color: var(--tx2); line-height: 1.25; display: block; margin-top: 2px; }
+
+.invite { margin: 0 14px; background: var(--hero); color: #fff; border-radius: var(--radius-lg); padding: 16px; }
+.invite h3 { font: italic 700 1.875rem/1 var(--font-display); }
+.invite p { font-size: .875rem; opacity: .88; margin-top: 6px; line-height: 1.4; }
+.invite .btn { margin-top: 14px; }
+
+.download { display: flex; gap: 12px; align-items: center; padding: 12px 16px; }
+.download + .download { border-top: 1px solid var(--bd); }
+.download__body { flex: 1; min-width: 0; }
+.download__body b { font-size: .9375rem; display: block; }
+.download__body span { font-size: .8125rem; color: var(--tx2); }
+.download__state { font-size: .8125rem; font-weight: 700; display: flex; align-items: center; gap: 4px; color: var(--ok); }
+.download__bar { height: 6px; border-radius: 3px; background: var(--bd); margin-top: 6px; overflow: hidden; }
+.download__bar i { display: block; height: 100%; background: var(--link); border-radius: 3px; }
+
+.size-card { margin: 12px 14px 0; background: var(--card); border-radius: 20px; padding: 14px 16px; }
+.size-card__ends { display: flex; justify-content: space-between; align-items: center; font-size: .875rem; font-weight: 700; }
+.size-slider { width: 100%; margin: 10px 0 6px; accent-color: var(--link); height: 36px; }
+.size-card__preview { border-radius: 14px; background: var(--bg); padding: 10px 12px; margin-top: 4px; }
+
+.lang-option { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-height: 64px; width: 100%; text-align: left; }
+.lang-option + .lang-option { border-top: 1px solid var(--bd); }
+.lang-option b { font-size: 1.0625rem; display: block; }
+.lang-option span.sub { font-size: .8125rem; color: var(--tx2); display: flex; align-items: center; gap: 8px; }
+.lang-option .radio { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bd); flex-shrink: 0; }
+.lang-option.is-active .radio { border: 8px solid var(--link); }
+.lang-tag { font-size: .75rem; font-weight: 700; background: var(--warn-bg); color: var(--warn-tx); padding: 2px 8px; border-radius: 9px; }
+
+.faq { padding: 14px 16px; font-size: .9375rem; display: flex; gap: 10px; align-items: center; min-height: 56px; width: 100%; text-align: left; }
+.faq + .faq, .faq-answer + .faq { border-top: 1px solid var(--bd); }
+.faq i { color: var(--tx2); font-size: 20px; margin-left: auto; transition: transform var(--dur-fast) var(--ease-out); }
+.faq[aria-expanded="true"] i { transform: rotate(180deg); }
+.faq-answer { padding: 0 16px 14px; font-size: .875rem; color: var(--tx2); line-height: 1.45; }
+.contact-grid { margin: 12px 14px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.contact-grid a { background: var(--card); border-radius: 18px; padding: 14px 12px; text-align: center; font-size: .875rem; font-weight: 700; }
+.contact-grid i { display: block; font-size: 28px; margin-bottom: 6px; }
+.history-time { font-size: .8125rem; color: var(--tx2); }

@@ -1,0 +1,176 @@
+/* ================================================================
+   02 · COMPONENTES COMPARTIDOS
+   Barra superior, barra inferior, botones, chips, insignias de línea, listas,
+   interruptores, avisos, hojas inferiores, diálogos y campos.
+   ================================================================ */
+
+/* ---------- Barra superior azul + franja de aguayo ---------- */
+.appbar { background: var(--hero); color: #fff; flex-shrink: 0; padding-top: env(safe-area-inset-top); }
+.appbar__row { height: 66px; display: flex; align-items: center; gap: 6px; padding: 0 10px 0 16px; }
+.appbar__logo { height: 42px; width: auto; filter: invert(1) brightness(1.1); }
+.appbar__spacer { flex: 1; }
+.appbar__lang { min-width: var(--touch); height: var(--touch); padding: 0 10px; border-radius: 12px; background: rgba(255,255,255,.14); color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: .8125rem; font-weight: 700; }
+.appbar__lang i { font-size: 17px; }
+.stripe { height: 8px; background: var(--aguayo); flex-shrink: 0; }
+
+/* Barra con botón volver (pantallas internas) */
+.subbar { display: flex; align-items: center; gap: 6px; padding: 10px 12px 2px; }
+.subbar__back { width: var(--touch); height: var(--touch); border-radius: 14px; background: var(--card); display: grid; place-items: center; font-size: 22px; color: var(--link); flex-shrink: 0; }
+.subbar__title { font: italic 700 2rem/1 var(--font-display); }
+.subbar__sub { font-size: .8125rem; color: var(--tx2); margin-top: 2px; }
+
+/* ---------- Barra inferior flotante (solo íconos) ---------- */
+.tabbar { position: absolute; left: 14px; right: 14px; bottom: calc(16px + env(safe-area-inset-bottom)); height: var(--tabbar-h); border-radius: 33px; background: var(--pill); padding: 0 8px; display: flex; box-shadow: 0 12px 28px rgba(8,22,48,.4); z-index: var(--z-tabbar); }
+#app[data-theme="dark"] .tabbar { border: 1px solid #2C4670; }
+.tabbar__item { flex: 1; display: grid; place-items: center; position: relative; color: rgba(255,255,255,.74); }
+.tabbar__item i { font-size: 26px; width: 60px; height: 44px; display: grid; place-items: center; border-radius: 22px; }
+.tabbar__item.is-active { color: var(--amarillo); }
+.tabbar__item.is-active i { background: rgba(255,255,255,.12); }
+.tabbar__badge { position: absolute; top: 2px; left: calc(50% + 8px); min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--magenta); color: #fff; font-size: .75rem; font-weight: 700; display: grid; place-items: center; border: 2px solid var(--pill); }
+.tabbar.is-hidden { display: none; }
+
+/* ---------- Botones ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 22px; border-radius: 26px; font-weight: 700; font-size: 1rem; transition: transform var(--dur-press) var(--ease-out); }
+.btn:active { transform: scale(.97); }
+.btn--block { display: flex; width: 100%; }
+.btn--primary { background: var(--amarillo); color: #0F2D57; }
+.btn--dark { background: var(--hero); color: #fff; }
+#app[data-theme="dark"] .btn--dark { background: #2F6DB8; }
+.btn--outline { background: var(--card); color: var(--tx); border: 1.5px solid var(--bd); font-weight: 600; }
+.btn--lg { min-height: 56px; font-size: 1.0625rem; }
+.btn--sm { min-height: var(--touch); font-size: .9375rem; }
+.btn--danger { background: var(--danger-bg); color: var(--danger-tx); }
+.link-btn { min-height: var(--touch); padding: 0 12px; color: var(--link); font-weight: 600; font-size: .9375rem; }
+
+/* ---------- Chips (filtros y atajos) ---------- */
+.chip-row { display: flex; gap: 8px; padding: 8px 16px; overflow-x: auto; scrollbar-width: none; }
+.chip-row::-webkit-scrollbar { display: none; }
+.chip { flex-shrink: 0; min-height: var(--touch); padding: 0 15px; border-radius: 22px; background: var(--card); display: inline-flex; align-items: center; gap: 7px; font-size: .875rem; font-weight: 600; white-space: nowrap; transition: transform var(--dur-press) var(--ease-out); }
+.chip:active { transform: scale(.97); }
+.chip i { font-size: 18px; }
+.chip.is-active { background: var(--hero); color: #fff; }
+#app[data-theme="dark"] .chip.is-active { background: #2F6DB8; }
+.chip--soft { background: var(--chip); }
+.chip__count { font-weight: 600; opacity: .7; font-variant-numeric: tabular-nums; }
+.chip--sm { min-height: 28px; padding: 0 10px; font-size: .75rem; pointer-events: none; }
+
+/* ---------- Insignia de línea (el "billete" con el número) ---------- */
+.line-badge { --size: 46px; width: var(--size); height: var(--size); border-radius: calc(var(--size) * .3); background: var(--line); color: #fff; display: grid; place-items: center; flex-shrink: 0; font: italic 700 calc(var(--size) * .6)/1 var(--font-display); }
+.line-badge--sm { --size: 22px; }
+.line-badge--md { --size: 40px; }
+.line-badge--lg { --size: 52px; }
+.line-badge--xl { --size: 64px; }
+.line-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+
+/* ---------- Grupos de filas (listas) ---------- */
+.group { margin: 0 14px; background: var(--card); border-radius: var(--radius-lg); overflow: hidden; }
+.group + .group { margin-top: 12px; }
+.item { display: flex; align-items: center; gap: 14px; padding: 10px 16px; min-height: 56px; width: 100%; text-align: left; }
+.item + .item { border-top: 1px solid var(--bd); }
+.item__icon { font-size: 22px; color: var(--link); width: 26px; text-align: center; flex-shrink: 0; }
+.item__body { flex: 1; min-width: 0; }
+.item__title { font-size: .9375rem; font-weight: 500; }
+.item__title--strong { font-weight: 700; font-size: 1rem; }
+.item__sub { font-size: .8125rem; color: var(--tx2); margin-top: 1px; line-height: 1.3; }
+.item__sub--ok { color: var(--ok); font-weight: 600; }
+.item__value { font-size: .875rem; color: var(--tx2); display: flex; align-items: center; gap: 2px; }
+.item__chevron { font-size: 20px; color: var(--tx2); }
+.item--tall { min-height: 64px; }
+
+/* ---------- Interruptor ---------- */
+.toggle { width: 46px; height: 28px; border-radius: 14px; background: var(--bd); position: relative; flex-shrink: 0; transition: background var(--dur-fast); }
+.toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform var(--dur-fast) var(--ease-out); }
+.toggle.is-on { background: #2F6DB8; }
+.toggle.is-on::after { transform: translateX(18px); }
+
+/* ---------- Control segmentado ---------- */
+.segmented { display: flex; background: var(--chip); border-radius: 22px; padding: 3px; margin: 0 14px; }
+.segmented__opt { flex: 1; min-height: 42px; border-radius: 19px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: .875rem; font-weight: 600; color: var(--tx2); text-align: center; }
+.segmented__opt.is-active { background: var(--card); color: var(--tx); box-shadow: 0 1px 4px rgba(8,22,48,.18); }
+
+/* ---------- Avisos y cajas informativas ---------- */
+.notice { display: flex; gap: 12px; align-items: flex-start; margin: 12px 16px 0; padding: 10px 14px; border-radius: 18px; background: var(--warn-bg); color: var(--warn-tx); font-size: .875rem; line-height: 1.3; }
+.notice i { font-size: 22px; color: var(--warn-ic); flex-shrink: 0; }
+.notice b { display: block; }
+.notice small { display: block; margin-top: 4px; font-size: .75rem; opacity: .9; }
+.notice--neutral { background: var(--chip); color: var(--tx); }
+.notice--neutral i { color: var(--tx2); }
+.strip { display: flex; align-items: center; gap: 10px; background: var(--warn-bg); color: var(--warn-tx); padding: 11px 16px; font-size: .875rem; font-weight: 600; }
+.strip i { font-size: 20px; }
+.infobox { margin: 10px 14px 0; display: flex; gap: 10px; align-items: center; background: var(--soft); border-radius: var(--radius-md); padding: 10px 12px; font-size: .8125rem; line-height: 1.35; }
+.infobox i { font-size: 22px; color: var(--link); flex-shrink: 0; }
+.tag-pill { display: inline-flex; align-items: center; gap: 5px; min-height: 32px; padding: 0 12px; border-radius: 16px; background: var(--warn-bg); color: var(--warn-tx); font-size: .8125rem; font-weight: 700; white-space: nowrap; }
+.tag-pill i { font-size: 17px; color: var(--warn-ic); }
+.mini-pill { display: inline-flex; align-items: center; gap: 4px; font-style: normal; font-size: .75rem; font-weight: 700; background: var(--warn-bg); color: var(--warn-tx); padding: 1px 8px; border-radius: 10px; margin-left: 4px; }
+.mini-pill i { font-size: 14px; color: var(--warn-ic); }
+.est { display: inline-flex; align-items: center; gap: 5px; font-size: .75rem; color: var(--tx2); }
+.est i { font-size: 14px; }
+
+/* ---------- Títulos ---------- */
+.page-title { padding: 16px 16px 4px; }
+.page-title h2 { font: italic 700 2.375rem/1 var(--font-display); }
+.page-title p { font-size: .875rem; color: var(--tx2); margin-top: 4px; }
+.section-title { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px 8px; }
+.section-title h3 { font: 600 1.625rem var(--font-display); }
+.section-title a, .section-title button { font-size: .875rem; font-weight: 600; color: var(--link); }
+.hint { font-size: .8125rem; color: var(--tx2); padding: 2px 18px 6px; font-weight: 500; }
+
+/* ---------- Hoja inferior (bottom sheet) ---------- */
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--sheet); border-radius: var(--radius-xl) var(--radius-xl) 0 0; box-shadow: var(--shadow-sheet); padding: 8px 0 var(--tabbar-space); z-index: var(--z-sheet); max-height: 78%; overflow-y: auto; overscroll-behavior: contain; }
+.sheet__handle { position: relative; width: 42px; height: 5px; border-radius: 3px; background: var(--bd); margin: 0 auto 10px; touch-action: none; cursor: grab; }
+.sheet__handle::before { content: ''; position: absolute; inset: -16px -80px; }          /* zona de agarre más grande que la rayita */
+.sheet__handle:active { cursor: grabbing; }
+.sheet__handle:focus-visible { outline-offset: 6px; }
+.sheet .sheet__handle { position: sticky; top: 0; }
+.sheet__title { font: 600 1.625rem var(--font-display); padding: 0 18px; }
+.sheet__sub { font-size: .8125rem; color: var(--tx2); padding: 0 18px 8px; }
+.sheet__row { display: flex; align-items: center; gap: 12px; padding: 10px 18px; min-height: 64px; width: 100%; text-align: left; }
+.sheet__row + .sheet__row { border-top: 1px solid var(--bd); }
+.sheet__row.is-best { background: var(--soft); }
+.sheet__row-body { flex: 1; min-width: 0; }
+.sheet__row-title { font-size: 1rem; font-weight: 700; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.sheet__row-title em { font-style: normal; font-size: .75rem; font-weight: 600; background: var(--chip); padding: 2px 8px; border-radius: 9px; }
+.sheet__row-sub { font-size: .8125rem; color: var(--tx2); margin-top: 1px; line-height: 1.3; }
+.sheet__row-time { font: 700 2.125rem/1 var(--font-display); text-align: right; }
+.sheet__row-time small { display: block; font: 500 .75rem var(--font-ui); color: var(--tx2); margin-top: 2px; }
+
+/* Hoja modal (con fondo oscuro detrás) */
+.overlay { position: absolute; inset: 0; background: rgba(8,18,36,.6); z-index: var(--z-overlay); }
+.modal-sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--sheet); border-radius: var(--radius-xl) var(--radius-xl) 0 0; z-index: var(--z-dialog); padding: 8px 18px 26px; box-shadow: 0 -10px 30px rgba(0,0,0,.35); max-height: 92%; overflow-y: auto; }
+.modal-sheet h3 { font: 600 1.75rem var(--font-display); }
+.dialog { position: absolute; left: 22px; right: 22px; top: 50%; transform: translateY(-50%); background: var(--sheet); border-radius: 26px; padding: 22px 20px 14px; z-index: var(--z-dialog); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+.dialog h3 { font: 600 1.75rem var(--font-display); }
+.dialog p { font-size: .875rem; color: var(--tx2); margin-top: 6px; line-height: 1.4; }
+.dialog__actions { display: flex; gap: 8px; margin-top: 16px; }
+.dialog__actions .btn { flex: 1; }
+
+/* ---------- Campos de formulario ---------- */
+.field { display: flex; align-items: center; gap: 10px; min-height: 58px; padding: 7px 14px 8px; background: var(--card); border: 1.5px solid var(--bd); border-radius: var(--radius-md); }
+.field + .field { margin-top: 8px; }
+.field:focus-within { border-color: var(--link); box-shadow: 0 0 0 3px var(--soft); }
+.field.is-error { border-color: var(--danger-tx); background: var(--danger-bg); }
+.field__col { flex: 1; min-width: 0; }
+.field__label { display: block; font-size: .75rem; font-weight: 600; color: var(--tx2); }
+.field__input { width: 100%; border: 0; outline: 0; background: none; font: inherit; font-size: 1rem; color: var(--tx); padding: 1px 0; }
+.field__input::placeholder { color: var(--tx2); opacity: .75; }
+.field__icon { font-size: 20px; color: var(--tx2); }
+.field__error { display: flex; gap: 6px; align-items: center; font-size: .8125rem; color: var(--danger-tx); margin: 5px 4px 0; font-weight: 500; }
+
+/* ---------- Estados vacíos y confirmaciones ---------- */
+.empty { margin: 30px 24px 0; text-align: center; }
+.empty__icon { width: 84px; height: 84px; border-radius: 50%; background: var(--ok-bg); color: var(--ok); display: grid; place-items: center; font-size: 46px; margin: 0 auto 14px; }
+.empty h3 { font: italic 700 2.125rem var(--font-display); }
+.empty p { font-size: .9375rem; color: var(--tx2); line-height: 1.45; margin-top: 6px; }
+
+/* ---------- Botón flotante y tarjeta flotante (sobre mapas) ---------- */
+.fab { position: absolute; right: 16px; bottom: calc(var(--tabbar-space) - 8px); min-height: 52px; padding: 0 20px; border-radius: 26px; background: var(--amarillo); color: #0F2D57; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: .9375rem; box-shadow: 0 8px 20px rgba(8,22,48,.3); z-index: 15; transition: transform var(--dur-press) var(--ease-out); }
+.fab:active { transform: scale(.97); }
+.fab i { font-size: 22px; }
+.float-card { position: absolute; left: 12px; right: 12px; top: 12px; background: var(--card); border-radius: var(--radius-lg); box-shadow: var(--shadow-float); padding: 8px; z-index: var(--z-map-ui); }
+.map-btn { position: absolute; width: 46px; height: 46px; border-radius: 15px; background: var(--card); box-shadow: 0 4px 14px rgba(8,22,48,.2); display: grid; place-items: center; font-size: 22px; color: var(--link); z-index: var(--z-map-ui); }
+
+/* ---------- Aviso emergente (toast) ---------- */
+.toast { position: absolute; left: 50%; bottom: calc(var(--tabbar-space) + 8px); transform: translateX(-50%); max-width: 86%; background: #14213A; color: #fff; padding: 12px 18px; border-radius: 14px; font-size: .875rem; font-weight: 600; z-index: var(--z-toast); text-align: center; animation: toast-in var(--dur-base) var(--ease-out); }
+
+/* El número de la línea siempre va en blanco (evita que otros estilos de texto lo pisen) */
+.line-badge, .line-badge * { color: #fff !important; }

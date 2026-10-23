@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ÑanGO · Editor de líneas</title>
+  <!-- La clave la pone el servidor local (node tools/admin.mjs) al entregar esta página -->
+  <meta name="admin-token" content="__TOKEN__">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="sin-servidor" hidden>
+    <h2>Este editor necesita el servidor local</h2>
+    <p>En una terminal, dentro de la carpeta del proyecto, ejecuta:</p>
+    <pre>node tools/admin.mjs</pre>
+    <p>y abre <b>http://localhost:5173/admin/</b></p>
+  </div>
+
+  <header id="barra">
+    <h1>ÑanGO · Editor de líneas</h1>
+    <span id="estado-guardado"></span>
+    <span class="espacio"></span>
+    <button id="btn-deshacer" type="button" title="Deshacer (Ctrl+Z)" disabled>↶ Deshacer</button>
+    <button id="btn-guardar" type="button" class="primario" disabled>Guardar</button>
+    <a href="../" target="_blank" rel="noopener">Ver la app ↗</a>
+  </header>
+
+  <div id="cuerpo">
+    <aside id="lateral">
+      <section id="lista"></section>
+      <section id="editor" hidden>
+        <h2 id="titulo-linea"></h2>
+        <nav id="pestanas">
+          <button type="button" data-tab="datos">Datos</button>
+          <button type="button" data-tab="ida">Ida</button>
+          <button type="button" data-tab="vuelta">Vuelta</button>
+          <button type="button" data-tab="revision">Revisión <span id="n-revision"></span></button>
+        </nav>
+        <label class="check otras"><input type="checkbox" id="ver-otras" checked> Ver las otras líneas en el mapa</label>
+        <div id="vista"></div>
+      </section>
+    </aside>
+    <div id="mapa"></div>
+  </div>
+  <div id="aviso" role="status"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

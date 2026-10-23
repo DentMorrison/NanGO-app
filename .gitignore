@@ -1,0 +1,15 @@
+﻿# Dependencias de Node
+node_modules/
+
+# Archivos de compilación de Android y Gradle
+.gradle/
+build/
+android/app/build/
+android/.gradle/
+android/build/
+android/.idea/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

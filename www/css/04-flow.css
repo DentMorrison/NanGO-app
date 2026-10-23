@@ -1,0 +1,85 @@
+/* ================================================================
+   04 · FLUJO DE ENTRADA: carga (splash), bienvenida y registro
+   ================================================================ */
+
+/* ---------- Carga ---------- */
+.splash { background: #fff; color: #14213A; align-items: center; padding-top: calc(36px + env(safe-area-inset-top)); }
+.splash__wordmark { height: 66px; width: auto; }
+.splash__tagline { font: italic 700 1.5rem var(--font-display); color: #1F4E8A; margin-top: 6px; }
+.splash__status { margin-top: auto; width: 100%; padding: 0 46px calc(52px + env(safe-area-inset-bottom)); text-align: center; }
+.splash__message { font-size: .9375rem; font-weight: 600; min-height: 1.4em; }
+.splash__bar { height: 8px; border-radius: 4px; background: #E1E8F0; margin: 12px auto 0; max-width: 230px; overflow: hidden; }
+.splash__bar-fill { display: block; height: 100%; width: 0; background: var(--aguayo); background-size: 230px 100%; border-radius: 4px; transition: width var(--dur-base) linear; }
+.splash__pct { font-size: .8125rem; color: #4D5B73; margin-top: 8px; font-variant-numeric: tabular-nums; }
+
+/* Planeta en capas: cielo, nubes (se mueven), edificios y combi */
+.planet { position: relative; width: min(88%, 380px); aspect-ratio: 1; margin: auto 0; flex-shrink: 0; }
+.planet__sky { z-index: 0; position: absolute; left: 9.67%; top: 8.69%; width: 77.34%; aspect-ratio: 1; border-radius: 50%; background: #83BCDA; }
+.planet__clouds { z-index: 1; position: absolute; left: 9.67%; top: 8.69%; width: 77.34%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; container-type: inline-size; }
+.planet__cloud { position: absolute; left: 0; will-change: transform; animation: cloud-drift var(--dur) linear var(--delay) infinite; }
+.planet__front { z-index: 3; position: absolute; inset: 0; width: 100%; height: 100%; }
+.planet__van { z-index: 4; position: absolute; left: 0; top: 0; will-change: transform; filter: drop-shadow(0 5px 3px rgba(15,35,70,.32)); }
+
+/* ---------- Bienvenida y registro ---------- */
+.cover { position: relative; flex-shrink: 0; background: url('../assets/img/portada/iglesia.jpg') center 38% / cover no-repeat; color: #fff; }
+.cover::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,26,54,.55) 0, rgba(8,26,54,.12) 38%, rgba(8,26,54,.78) 100%); }
+.cover > * { position: relative; }
+.cover__bar { display: flex; align-items: center; height: 66px; padding: calc(0px + env(safe-area-inset-top)) 10px 0 16px; box-sizing: content-box; }
+.cover__bar .appbar__logo { height: 42px; }
+.cover__title { position: absolute; left: 18px; bottom: 18px; right: 130px; text-shadow: 0 2px 10px rgba(0,0,0,.45); }
+.cover__title h1 { font: italic 700 2.75rem/.92 var(--font-display); }
+.cover__title p { font-size: .875rem; margin-top: 6px; line-height: 1.3; }
+.cover__logo { position: absolute; right: 12px; bottom: -62px; width: 128px; z-index: 4; filter: drop-shadow(0 8px 10px rgba(8,26,54,.35)); }
+
+.welcome { flex: 1; background: var(--hero); color: #fff; padding: 22px 20px calc(24px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; }
+.welcome h2 { font: italic 700 2.625rem/.95 var(--font-display); }
+.welcome__lead { font-size: .9375rem; color: var(--on-hero-2); line-height: 1.4; margin-top: 8px; }
+.welcome__point { display: flex; gap: 14px; align-items: center; margin-top: 14px; }
+.welcome__point i { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,.12); color: var(--amarillo); font-size: 23px; display: grid; place-items: center; flex-shrink: 0; }
+.welcome__point b { display: block; font-size: .9375rem; }
+.welcome__point span { font-size: .8125rem; color: var(--on-hero-2); line-height: 1.35; }
+.welcome h4 { font-size: .875rem; font-weight: 700; margin: 18px 0 8px; }
+.lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.lang-grid button { min-height: 52px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.3); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .9375rem; font-weight: 700; line-height: 1.15; }
+.lang-grid button small { font-size: .75rem; font-weight: 500; opacity: .8; }
+.lang-grid button.is-active { background: #fff; color: #0F2D57; border-color: #fff; }
+.welcome .btn { margin-top: 18px; }
+
+.auth { flex: 1; overflow-y: auto; padding: 16px 18px calc(20px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; background: var(--bg); }
+.auth h2 { font: italic 700 2.25rem/1 var(--font-display); }
+.auth__sub { font-size: .875rem; color: var(--tx2); margin-top: 4px; }
+.auth__google { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; border-radius: 16px; background: var(--card); border: 1.5px solid var(--bd); font-weight: 600; font-size: .9375rem; }
+.auth__or { display: flex; align-items: center; gap: 10px; font-size: .8125rem; color: var(--tx2); margin: 12px 0 4px; }
+.auth__or::before, .auth__or::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+.auth form { display: flex; flex-direction: column; }
+.auth__switch { text-align: center; font-size: .875rem; color: var(--tx2); min-height: var(--touch); display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 4px; }
+.auth__switch b { color: var(--link); }
+.auth__legal { font-size: .75rem; color: var(--tx2); text-align: center; line-height: 1.4; padding: 0 6px; margin-top: 12px; }
+.auth__legal a, .consent a { color: var(--link); font-weight: 600; }
+
+/* ---------- Registro nuevo (Supabase): requisitos, avisos y legales ---------- */
+.auth section { display: flex; flex-direction: column; }
+#form > * + * { margin-top: 8px; }
+.auth__reqs { display: flex; flex-direction: column; gap: 2px; font-size: .75rem; color: var(--tx2); margin: 6px 2px 0; }
+.auth__reqs .is-ok { color: var(--ok); }
+.auth__forgot { text-align: right; margin: 6px 2px 0; }
+.auth__msg { min-height: 1.2em; font-size: .875rem; margin: 8px 2px 0; color: var(--danger-tx); line-height: 1.35; }
+.auth__msg.is-ok { color: var(--ok); }
+.auth__switch { align-self: center; }
+.auth > section > .link-btn { align-self: center; }
+
+button.field__icon { background: none; border: 0; cursor: pointer; padding: 0; min-width: 40px; min-height: 40px; display: grid; place-items: center; color: var(--tx2); }
+button.field__icon:disabled { opacity: .55; cursor: not-allowed; }
+
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: .8125rem; line-height: 1.45; color: var(--tx2); }
+.consent input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--link); }
+.consent.is-error { color: var(--danger-tx); }
+
+.doc { font-size: .9375rem; line-height: 1.55; color: var(--tx); margin-top: 10px; }
+.doc h2 { font: italic 700 1.75rem/1.1 var(--font-display); margin-bottom: 6px; }
+.doc h3 { font-size: .9375rem; font-weight: 700; color: var(--link); margin: 16px 0 4px; }
+.doc p { margin: 0 0 8px; }
+.doc ul, .doc ol { margin: 0 0 8px; padding-left: 20px; }
+.doc ul { list-style: disc; }
+.doc ol { list-style: decimal; }
+.doc li { margin-bottom: 4px; }

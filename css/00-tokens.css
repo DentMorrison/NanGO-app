@@ -1,0 +1,96 @@
+/* ================================================================
+   00 · TOKENS DE DISEÑO
+   Todo color, tipografía y medida de la app sale de aquí.
+   Para cambiar la identidad visual se edita SOLO este archivo.
+   Modo oscuro: se activa con data-theme="dark" en #app.
+   ================================================================ */
+:root {
+  /* Marca (salen del logotipo) */
+  --azul: #1F4E8A;
+  --azul-profundo: #0F2D57;
+  --cielo: #A9D6F5;
+  --amarillo: #F5C518;
+  --magenta: #C2185B;
+
+  /* Franja de aguayo: firma de la marca (8 px bajo la barra superior) */
+  --aguayo: linear-gradient(90deg, #C2185B 0 16.66%, #F28C28 0 33.33%, #F5C518 0 50%, #2E9E6B 0 66.66%, #1FA3C7 0 83.33%, #1F4E8A 0);
+
+  /* Tipografía */
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Inter', sans-serif;   /* números y títulos (de la tipografía del logo) */
+  --text-scale: 1;                                           /* lo cambia "Tamaño del texto" en Perfil */
+
+  /* Medidas */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --touch: 44px;                                             /* mínimo táctil recomendado */
+  --tabbar-h: 66px;
+  --tabbar-space: 104px;                                     /* espacio que deja el contenido para la barra inferior */
+
+  /* Animación (ver docs/PLAN-ANIMACIONES.md) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 120ms;
+  --dur-fast: 180ms;
+  --dur-base: 250ms;
+
+  /* Capas */
+  --z-map-ui: 5;
+  --z-sheet: 10;
+  --z-tabbar: 20;
+  --z-overlay: 40;
+  --z-dialog: 45;
+  --z-toast: 60;
+}
+
+/* ---------- Modo claro (por defecto) ---------- */
+#app, #app[data-theme="light"] {
+  --bg: #F1F4F8;
+  --card: #FFFFFF;
+  --sheet: #FFFFFF;
+  --tx: #14213A;
+  --tx2: #4D5B73;
+  --bd: #DCE5EF;
+  --chip: #EAF1F8;
+  --soft: #E6F2FC;
+  --hero: #0F2D57;       /* barra superior y bloques azules */
+  --pill: #0F2D57;       /* barra inferior */
+  --link: #1F4E8A;
+  --primary: #1F4E8A;
+  --on-hero-2: rgba(255, 255, 255, .82);
+  --warn-bg: #FFF3C9; --warn-tx: #5A4300; --warn-ic: #B45309;
+  --danger-bg: #FCE8E6; --danger-tx: #B3261E;
+  --ok: #1B7A45; --ok-bg: #E1F4E9;
+  --shadow-float: 0 8px 24px rgba(8, 22, 48, .22);
+  --shadow-sheet: 0 -8px 28px rgba(8, 22, 48, .2);
+  --map-filter: none;
+}
+
+/* ---------- Modo oscuro ---------- */
+#app[data-theme="dark"] {
+  --bg: #0B1524;
+  --card: #14233B;
+  --sheet: #14233B;
+  --tx: #E8EEF7;
+  --tx2: #9DB0C8;
+  --bd: #243752;
+  --chip: #1C2F4B;
+  --soft: #1D3556;
+  --hero: #112A4D;
+  --pill: #1B3355;
+  --link: #8DBBF2;
+  --primary: #2F6DB8;
+  --on-hero-2: rgba(255, 255, 255, .82);
+  --warn-bg: #3A3010; --warn-tx: #F7DE7A; --warn-ic: #F5C518;
+  --danger-bg: #3D1C1A; --danger-tx: #FF9A92;
+  --ok: #6FD39A; --ok-bg: #12372A;
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, .45);
+  --shadow-sheet: 0 -8px 28px rgba(0, 0, 0, .5);
+  --map-filter: invert(1) hue-rotate(180deg) brightness(.88) contrast(.92) saturate(.8);
+}
+
+/* ---------- Alto contraste (Perfil > Tamano del texto) ---------- */
+#app.high-contrast { --tx2: #14213A; --bd: #8A99AD; --link: #0B2E66; }
+#app.high-contrast[data-theme="dark"] { --tx2: #FFFFFF; --bd: #6F86A8; --link: #BBD6FF; }

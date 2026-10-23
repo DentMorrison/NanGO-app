@@ -1,0 +1,58 @@
+/* ================================================================
+   01 · BASE: reinicio, estructura de la app y utilidades
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: calc(16px * var(--text-scale)); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-ui);
+  background: #E8EDF3;
+  color: #14213A;
+  -webkit-font-smoothing: antialiased;
+  height: 100dvh;
+  overflow: hidden;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+ul { list-style: none; }
+
+::selection { background: #A9D6F5; color: #0F2D57; }
+:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- Estructura: la app ocupa el celular; en escritorio queda como un teléfono ---------- */
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--tx);
+}
+@media (min-width: 520px) {
+  body { display: grid; place-items: center; }
+  .app { height: min(900px, 100dvh - 24px); border-radius: 36px; box-shadow: 0 24px 60px rgba(20, 33, 58, .3); }
+}
+
+.screen { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.screen--flow { background: var(--card); }
+
+/* Zona que se desplaza; deja espacio para la barra inferior */
+.scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: var(--tabbar-space); }
+.scroll--no-tabbar { padding-bottom: 24px; }
+
+/* ---------- Utilidades ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.row { display: flex; align-items: center; }
+.grow { flex: 1; min-width: 0; }
+.mt-8 { margin-top: 8px; } .mt-12 { margin-top: 12px; } .mt-16 { margin-top: 16px; }
+.muted { color: var(--tx2); }
+.display { font-family: var(--font-display); font-style: italic; font-weight: 700; }
+.hidden { display: none !important; }
+.nowrap { white-space: nowrap; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+mark { background: var(--amarillo); color: #0F2D57; border-radius: 3px; padding: 0 1px; }

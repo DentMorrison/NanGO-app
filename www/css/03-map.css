@@ -1,0 +1,44 @@
+/* ================================================================
+   03 · MAPA (Leaflet)
+   El mapa ocupa toda la pantalla; encima van tarjetas flotantes y hojas.
+   El modo oscuro se logra filtrando las baldosas de OpenStreetMap.
+   ================================================================ */
+.map { position: absolute; inset: 0; z-index: 0; background: #E3ECF4; }
+.map--strip { position: relative; height: 170px; flex-shrink: 0; }
+.leaflet-container { font-family: var(--font-ui); background: #E3ECF4; }
+.leaflet-tile-pane { filter: var(--map-filter); }
+
+/* Selector de punto a pantalla completa ("Elegir en el mapa") */
+.mappicker { position: absolute; inset: 0; z-index: 50; background: #E3ECF4; overflow: hidden; }
+.mappicker__map { position: absolute; inset: 0; }
+.mappicker__pin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-100% + 10px)); z-index: 1100; pointer-events: none; display: flex; flex-direction: column; align-items: center; }
+.mappicker__pin span { background: #1F4E8A; color: #fff; font-weight: 700; font-size: .8125rem; padding: 6px 14px; border-radius: 999px; box-shadow: 0 3px 8px rgba(8,22,48,.3); white-space: nowrap; }
+.mappicker__pin i { width: 20px; height: 20px; border-radius: 50%; background: #1F4E8A; border: 3px solid #fff; margin-top: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.mappicker__pin.is-dest span, .mappicker__pin.is-dest i { background: #F5C518; color: #0F2D57; }
+.mappicker__back { position: absolute; top: 14px; left: 12px; z-index: 1100; width: 42px; height: 42px; border-radius: 50%; border: 0; background: #fff; color: #0F2D57; box-shadow: 0 3px 10px rgba(0,0,0,.2); font-size: 20px; display: grid; place-items: center; }
+.mappicker__sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1100; background: var(--sheet); border-radius: 24px 24px 0 0; padding: 16px 16px calc(18px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px rgba(8,22,48,.2); display: grid; }
+.mappicker__dir { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+.mappicker__coords { color: var(--tx2); font-size: .8125rem; }
+.mappicker__link { display: grid; gap: 4px; margin-top: 4px; }
+.mappicker__link[hidden] { display: none; }
+.mappicker__input { width: 100%; border: 1.5px solid var(--bd, #D5DEEC); border-radius: 12px; padding: 11px 12px; font: inherit; font-size: .875rem; background: transparent; color: inherit; }
+.mappicker__msg { color: var(--tx2); font-size: .8125rem; line-height: 1.35; min-height: 1em; }
+.mappicker__msg.is-error { color: #B3261E; }
+.mappicker__paste { justify-self: start; margin-top: 8px; background: none; border: 0; color: var(--link); font-weight: 600; font-size: .8125rem; padding: 6px 0; }
+#app[data-theme="dark"] .leaflet-container { background: #10203A; }
+.leaflet-control-attribution { font-size: 10px !important; background: rgba(255,255,255,.7) !important; }
+.leaflet-control-zoom { display: none; }
+
+/* Marcadores propios */
+.pin { width: 24px; height: 24px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.pin--origin { background: #1F4E8A; }
+.pin--dest { background: #F5C518; }
+.pin--stop { width: 14px; height: 14px; border-width: 3px; background: #fff; }
+.pin--now { background: #F5C518; box-shadow: 0 0 0 8px rgba(245,197,24,.3), 0 2px 8px rgba(0,0,0,.35); }
+
+/* Rótulo junto a los puntos de origen y destino */
+.pin { position: relative; }
+.pin-label { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); white-space: nowrap; padding: 3px 10px; border-radius: 10px; font: 700 .75rem/1.2 var(--font-ui); box-shadow: 0 3px 8px rgba(8,22,48,.32); }
+.pin-label::after { content: ''; position: absolute; left: 50%; top: 100%; width: 8px; height: 8px; background: inherit; transform: translate(-50%, -50%) rotate(45deg); }
+.pin-label--origin { background: #1F4E8A; color: #fff; }
+.pin-label--dest { background: #F5C518; color: #0F2D57; }

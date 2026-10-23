@@ -1,0 +1,41 @@
+/* ================================================================
+   10 · MODO VIAJE (sin GPS: la persona marca los paraderos)
+   ================================================================ */
+.trip-next { margin: 0 14px; background: var(--hero); color: #fff; border-radius: 24px; padding: 16px 18px; position: relative; z-index: 5; margin-top: -24px; }
+.trip-next small { font-size: .8125rem; opacity: .85; }
+.trip-next h2 { font: italic 700 2.125rem/1 var(--font-display); margin: 3px 0 6px; }
+.trip-next p { font-size: .875rem; display: flex; gap: 6px; opacity: .95; }
+.trip-next__chips { display: flex; gap: 8px; margin-top: 12px; font-size: .8125rem; font-weight: 600; }
+.trip-next__chips span { background: rgba(255,255,255,.16); padding: 6px 10px; border-radius: 14px; display: flex; align-items: center; gap: 5px; }
+.trip-alert { margin: 0 14px; border-radius: 24px; background: var(--amarillo); color: #0F2D57; padding: 16px 18px; position: relative; z-index: 5; margin-top: -24px; }
+.trip-alert small { font-size: .8125rem; font-weight: 600; }
+.trip-alert h2 { font: italic 700 2.25rem/1 var(--font-display); margin: 3px 0 4px; }
+.trip-alert p { font-size: .875rem; display: flex; gap: 6px; align-items: center; }
+
+.stops { margin-top: 8px; overflow-y: auto; flex: 1; padding-bottom: 150px; }
+.stop { display: flex; align-items: center; gap: 12px; min-height: 42px; font-size: .9375rem; padding: 0 18px; }
+.stop__dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; flex-shrink: 0; border: 2.5px solid var(--bd); color: #fff; }
+.stop__name { flex: 1; text-align: left; }
+.stop__ref { font-size: .75rem; color: var(--tx2); font-weight: 400; display: block; }
+.stop.is-past { color: var(--tx2); }
+.stop.is-past .stop__dot { background: #2E9E6B; border-color: #2E9E6B; }
+.stop.is-now { font-weight: 700; }
+.stop.is-now .stop__dot { border-color: var(--azul); background: var(--card); box-shadow: 0 0 0 4px var(--soft); }
+#app[data-theme="dark"] .stop.is-now .stop__dot { border-color: #8DBBF2; }
+
+.trip-actions { position: absolute; left: 14px; right: 14px; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 15; display: flex; flex-direction: column; gap: 8px; }
+.alarm-row { margin: 10px 16px 0; display: flex; align-items: center; gap: 12px; min-height: 60px; background: var(--card); border-radius: 20px; padding: 10px 12px; }
+.alarm-row i { font-size: 26px; color: var(--warn-ic); }
+
+.finish { margin: 20px 24px 0; text-align: center; }
+.finish__icon { width: 92px; height: 92px; border-radius: 50%; background: var(--ok-bg); color: var(--ok); display: grid; place-items: center; font-size: 52px; margin: 0 auto 12px; }
+.finish h3 { font: italic 700 2.5rem/1 var(--font-display); }
+.finish p { font-size: .9375rem; color: var(--tx2); margin-top: 6px; line-height: 1.4; }
+.summary-card { margin: 14px 14px 0; background: var(--card); border-radius: 20px; padding: 6px 16px; }
+.summary-card div { display: flex; justify-content: space-between; padding: 10px 0; font-size: .9375rem; }
+.summary-card div + div { border-top: 1px solid var(--bd); }
+.summary-card span { color: var(--tx2); }
+.summary-card b { font-variant-numeric: tabular-nums; }
+.rating { display: flex; justify-content: center; gap: 10px; margin: 14px 0 0; }
+.rating button { width: 56px; height: 56px; border-radius: 18px; background: var(--card); display: grid; place-items: center; font-size: 28px; color: var(--link); }
+.rating button.is-active { background: var(--hero); color: #fff; }

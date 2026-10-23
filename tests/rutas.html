@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pruebas de la lógica de rutas · ÑanGO</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; margin: 0; padding: 20px; background: #f4f6fa; color: #14213a; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; } p { margin: 0 0 14px; color: #4d5b73; }
+  .res { display: grid; gap: 6px; max-width: 900px; }
+  .fila { padding: 8px 12px; border-radius: 8px; background: #fff; border-left: 5px solid #ccc; }
+  .ok { border-color: #2e8b57; } .mal { border-color: #c62828; background: #fdecea; }
+  table { border-collapse: collapse; background: #fff; margin-top: 16px; font-size: 13px; } td, th { border: 1px solid #dde4ee; padding: 5px 8px; text-align: left; }
+</style>
+</head>
+<body>
+<h1>Pruebas de la lógica de rutas</h1>
+<p>Abre esta página con Live Server (<code>/tests/rutas.html</code>). Revisa que las rutas sean coherentes con la geografía real de los recorridos.</p>
+<div class="res" id="res"></div>
+<div id="tabla"></div>
+<script type="module">
+import { LINEAS, cargarLineas } from '../js/data/lineas.js';
+await cargarLineas('../data/lineas/');
+import { buscarOpciones, pasosDe } from '../js/services/routing.service.js';
+import { getLugar, listar } from '../js/services/places.service.js';
+import { callesDeLinea, calleEn, paraderosDe } from '../js/services/lines.service.js';
+import { km } from '../js/services/geo.js';
+
+const res = document.getElementById('res');
+const prueba = (nombre, ok, detalle = '') => { const d = document.createElement('div'); d.className = `fila ${ok ? 'ok' : 'mal'}`; d.textContent = `${ok ? '✔' : '✘'} ${nombre}${detalle ? ' — ' + detalle : ''}`; res.append(d); };
+
+const REF = ['UNAJ', 'Plaza de Armas', 'Real Plaza Juliaca', 'Mercado Santa Bárbara', 'Terminal Terrestre', 'Mercado Túpac Amaru', 'A Huancané', 'Hospital Regional de Juliaca Carlos Monge Medrano', 'Plaza Bolognesi', 'Estadio Guillermo Briceño Rosamedina'];
+const lugares = REF.map(getLugar).filter(Boolean);
+prueba('Los lugares de referencia existen en el catálogo', lugares.length === REF.length, `${lugares.length}/${REF.length}`);
+
+let opciones = 0, sinRuta = 0; const fallos = { caminata: [], tramo: [], bajada: [], tiempo: [], simetria: [], calle: [] };
+const filas = [];
+for (const a of lugares) for (const b of lugares) {
+  if (a === b) continue;
+  const ops = buscarOpciones(a.n, b.n);
+  const inverso = buscarOpciones(b.n, a.n);
+  if (!ops.length) { sinRuta++; filas.push([a.n, b.n, 'sin ruta']); continue; }
+  for (const o of ops) {
+    opciones++;
+    const par = `${a.n} → ${b.n} (${o.id})`;
+    const primero = o.tramos[0], ultimo = o.tramos[o.tramos.length - 1];
+    // 1. Se sube cerca del origen y se baja cerca del destino (en línea recta, máx. 0,9 km)
+    if (km(a.c, primero.sube.c) > 0.9 + 1e-6) fallos.caminata.push(`${par}: sube a ${km(a.c, primero.sube.c).toFixed(2)} km`);
+    if (km(b.c, ultimo.baja.c) > 0.9 + 1e-6) fallos.bajada.push(`${par}: baja a ${km(b.c, ultimo.baja.c).toFixed(2)} km`);
+    // 2. Cada tramo en micro mide algo razonable y no se pasa del largo de la línea
+    for (const t of o.tramos) { const l = LINEAS.find((x) => x.id === t.lineaId); const largo = l.ida.reduce((s, p, i, arr) => (i ? s + km(arr[i - 1], p) : 0), 0); if (t.km < 0.2 || t.km > largo + 1e-6) fallos.tramo.push(`${par}: tramo de ${t.km.toFixed(1)} km`); }
+    // 3. Tiempos creíbles aprox (entre 5 y 120 min) y precio > 0
+    if (!(o.minutos >= 5 && o.minutos <= 120) || !(o.precio > 0)) fallos.tiempo.push(`${par}: ${o.minutos} min, S/ ${o.precio}`);
+    // 4. Las instrucciones nombran calles reales
+    const pasos = pasosDe(o, a.n, b.n);
+    if (pasos.some((p) => /null|undefined/.test(p.titulo + p.detalle))) fallos.calle.push(`${par}: instrucción con datos vacíos`);
+  }
+  // 5. Ida y vuelta: el mejor tiempo debe parecerse (± 8 min por la espera)
+  if (inverso.length && Math.abs(inverso[0].minutos - ops[0].minutos) > 8) fallos.simetria.push(`${a.n} ↔ ${b.n}: ${ops[0].minutos} vs ${inverso[0].minutos} min`);
+  filas.push([a.n, b.n, ops.map((o) => `${o.id.replace(/linea-/g, '')} ${o.minutos}m`).join(' | ')]);
+}
+prueba(`Se calcularon ${opciones} opciones sin errores`, opciones > 0, `${sinRuta} pares sin ruta (límite de líneas registradas)`);
+prueba('Se sube a ≤ 900 m del origen', !fallos.caminata.length, fallos.caminata.slice(0, 3).join('; '));
+prueba('Se baja a ≤ 900 m del destino', !fallos.bajada.length, fallos.bajada.slice(0, 3).join('; '));
+prueba('Cada tramo en micro es razonable (≥ 200 m y dentro de la línea)', !fallos.tramo.length, fallos.tramo.slice(0, 3).join('; '));
+prueba('Tiempos entre 5 y 120 min', !fallos.tiempo.length, fallos.tiempo.slice(0, 3).join('; '));
+prueba('Ida y vuelta dan tiempos parecidos', !fallos.simetria.length, fallos.simetria.slice(0, 3).join('; '));
+prueba('Las instrucciones no tienen datos vacíos', !fallos.calle.length, fallos.calle.slice(0, 3).join('; '));
+
+// Calles 
+for (const l of LINEAS) {
+  const calles = callesDeLinea(l);
+  prueba(`${l.nombre}: tiene calles reales registradas`, calles.length >= 5, `${calles.length} calles → ${calles.slice(0, 6).join(', ')}…`);
+  const sinNombre = l.ida.filter((_, i) => !calleEn(l, i)).length;
+  prueba(`${l.nombre}: casi todo el recorrido tiene nombre de calle`, sinNombre / l.ida.length < 0.1, `${sinNombre} de ${l.ida.length} puntos sin nombre`);
+}
+prueba('El catálogo tiene lugares con nombre', listar({ q: 'unaj' }).length > 0);
+
+// Precisión de los recorridos y paraderos
+for (const l of LINEAS) {
+  let hueco = 0;
+  for (let i = 1; i < l.ida.length; i++) hueco = Math.max(hueco, km(l.ida[i - 1], l.ida[i]));
+  prueba(`${l.nombre}: el recorrido no tiene huecos mayores a 60 m`, hueco <= 0.06, `mayor hueco: ${Math.round(hueco * 1000)} m (${l.ida.length} puntos)`);
+  const ps = paraderosDe(l);
+  const ordenados = ps.every((p, i) => !i || p.idx > ps[i - 1].idx);
+  const lejos = ps.filter((p) => p.dist !== null && p.dist > 500);
+  prueba(`${l.nombre}: ${ps.length} paraderos ubicados sobre el recorrido, en orden y a ≤ 500 m`, ps.length >= 3 && ordenados && !lejos.length, lejos.map((p) => p.nombre).join(', '));
+}
+// Los lugares de referencia deben quedar donde dice OpenStreetMap 
+const OSM = { 'UNAJ': [-15.48937, -70.15191], 'Plaza de Armas': [-15.49322, -70.13559], 'Real Plaza Juliaca': [-15.49586, -70.1298], 'Terminal Terrestre': [-15.48961, -70.11966], 'Estadio Guillermo Briceño Rosamedina': [-15.50267, -70.12338] };
+for (const [n, c] of Object.entries(OSM)) { const l = getLugar(n); prueba(`${n} está donde indica OpenStreetMap (≤ 150 m)`, l && km(l.c, c) <= 0.15, l ? `a ${Math.round(km(l.c, c) * 1000)} m` : 'no existe'); }
+
+document.getElementById('tabla').innerHTML = `<table><tr><th>Origen</th><th>Destino</th><th>Opciones (línea minutos)</th></tr>${filas.map((f) => `<tr>${f.map((x) => `<td>${x}</td>`).join('')}</tr>`).join('')}</table>`;
+</script>
+</body>
+</html>
